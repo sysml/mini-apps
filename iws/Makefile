@@ -1,11 +1,24 @@
 STUBDOM_NAME		:= $(notdir $(realpath .))
 STUBDOM_ROOT		:= $(realpath .)
 
-stub: script
+stub: $(STUBDOM_NAME).cfg
 
-.PHONY: script
-script: path=$(subst /,\/,$(realpath .)/build/iws_x86_64)
-script:
-	$(call verbose_cmd, sed -i -e "s/\(kernel[ 	]*=\).*$$/\1 '$(path)'/",'SED', iws.cfg)
+$(STUBDOM_NAME).cfg:
+	@echo "name        = '$(STUBDOM_NAME)'" >> $@
+	@echo "" >> $@
+	@echo "kernel      = '$(STUB_APP_IMG)'" >> $@
+	@echo "extra       = 'poweroff 2000'" >> $@
+	@echo "" >> $@
+	@echo "vcpus       = '1'" >> $@
+	@echo "memory      = '8'" >> $@
+	@echo "" >> $@
+	@echo "on_crash    = 'preserve'" >> $@
+	$(call verbose_cmd,$(TOUCH),'CREATE',$@)
+
+distclean: clean-cfg
+
+.PHONY: clean-cfg
+clean-cfg:
+	$(call verbose_cmd,$(RM),'CLN',$(STUBDOM_NAME).cfg)
 
 include $(MINIOS_ROOT)/stub.mk
