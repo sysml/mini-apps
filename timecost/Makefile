@@ -1,9 +1,11 @@
 STUBDOM_NAME		:= $(notdir $(realpath .))
 STUBDOM_ROOT		:= $(realpath .)
+STUB_APP_OBJS0		:= main.o
 
 ifeq ($(USE_NOW),y)
 STUB_CFLAGS			+= -DUSE_NOW
 endif
+
 
 stub: $(STUBDOM_NAME).cfg
 

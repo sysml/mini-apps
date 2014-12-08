@@ -1,5 +1,7 @@
 STUBDOM_NAME		:= $(notdir $(realpath .))
 STUBDOM_ROOT		:= $(realpath .)
+STUB_APP_OBJS0		:= main.o
+
 
 stub: $(STUBDOM_NAME).cfg
 
